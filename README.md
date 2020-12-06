@@ -18,3 +18,7 @@ finding letters in strings
 only keeping the trees and their position in the map
 
 if the Toboggan goes past the original map, it gets off set by the map width, no need for duplicating the map
+
+## Day 4
+
+data validation, using strings as keys to check which fields need checking, each field has a validation function.
