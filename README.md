@@ -22,3 +22,11 @@ if the Toboggan goes past the original map, it gets off set by the map width, no
 ## Day 4
 
 data validation, using strings as keys to check which fields need checking, each field has a validation function.
+
+## Day 5
+
+Binary search and finding neighbours
+
+## Day 6
+
+Finding answer counts, use of sets to remove duplicates

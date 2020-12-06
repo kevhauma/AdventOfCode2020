@@ -39,10 +39,10 @@ fs.readFile("./input.txt", 'utf8', (err, data) => {
     console.log(highestID)
 
     console.log(`This took ${Date.now() - start}ms`)
-    
+
     start = Date.now();
     console.log(partTwo())
-    
+
     console.log(`This took ${Date.now() - start}ms`)
 })
 
@@ -51,13 +51,13 @@ fs.readFile("./input.txt", 'utf8', (err, data) => {
 // PART TWO
 // ============================================================================================
 function partTwo() {
-    for(let id=0;id<highestID;id++){
-     let left = allIDs.find(i => i == id + 1 )
-     let right = allIDs.find(i => i == id - 1 )
-     let center = allIDs.find(i => i == id )
-        
-     if(left !=null && right!=null && center==null)
-        return id
+    for (let id = 0; id < highestID; id++) {
+        let left = allIDs.find(i => i == id + 1)
+        let right = allIDs.find(i => i == id - 1)
+        let center = allIDs.find(i => i == id)
+
+        if (left != null && right != null && center == null)
+            return id
     }
 }
 
