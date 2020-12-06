@@ -1,6 +1,6 @@
 # Advent of Code 2020
 
-Javascript (ECMAscript6) code for the [https://adventofcode.com/2020/](Advent of Code 2020).
+Javascript (ECMAscript6) code for the [Advent of Code 2020](https://adventofcode.com/2020/).
 
 No packages needed
 
