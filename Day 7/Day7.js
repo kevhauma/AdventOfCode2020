@@ -56,10 +56,10 @@ fs.readFile("./input.txt", 'utf8', (err, data) => {
 
 function partTwo() {
     start = Date.now();
-    let shinyBag = findBag("shiny", "gold")
+    let shinyBag = {mutation:"shiny", color:"gold"}
 
     console.log(shinyBag)
-    let result = recursiveBagFinding(1, shinyBag)
+    let result = recursiveBagFinding(shinyBag)
 
     console.log(result)
 
@@ -69,24 +69,22 @@ function partTwo() {
 }
 
 
-function recursiveBagFinding(quantity, bag) {
-
-    if (bag.content.length == 0) return quantity
+function recursiveBagFinding(bag) {    
+    bag = findBag(bag.mutation, bag.color)
+    
+    if (!bag) return 0
 
     let contentCount = 0;
-
+    
     //for for every bag in this bag, get the countCount
     for (let i = 0; i < bag.content.length; i++) {
         let content = bag.content[i]
-
-        //find bag in rule list, 
-        let contentBag = findBag(content.mutation, content.color)
-
+        
         //add the count of this bag's content to the big counter 
-        contentCount += recursiveBagFinding(content.quantity, contentBag)
+        contentCount += content.quantity * (1 + recursiveBagFinding(content))
     }
     //multiply the result with the amount of bags required
-    return contentCount * quantity
+    return contentCount 
 
 }
 
@@ -115,7 +113,10 @@ function convertData(data) {
             let [container, content] = e.replace(/bags|\./g, "").split("contain")
             let [mutation, color] = container.trim().split(" ")
 
-            container = {mutation,color}
+            container = {
+                mutation,
+                color
+            }
 
             content = content.split(",")
                 .map(c => {
