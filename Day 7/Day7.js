@@ -2,14 +2,14 @@ const fs = require("fs")
 
 console.log("==== DAY 7 ====")
 
-let bagRules
+let bags
 // PART ONE
 // ============================================================================================
 let start = Date.now();
 fs.readFile("./input.txt", 'utf8', (err, data) => {
     if (err) throw err
 
-    bagRules = convertData(data)
+    bags = convertData(data)
 
 
     let shinyHoldingBags = findContent("shiny", "gold")
@@ -58,7 +58,8 @@ function partTwo() {
     start = Date.now();
     let shinyBag = findBag("shiny", "gold")
 
-    let result = recursiveBagFinding(shinyBag)
+    console.log(shinyBag)
+    let result = recursiveBagFinding(1, shinyBag)
 
     console.log(result)
 
@@ -68,37 +69,37 @@ function partTwo() {
 }
 
 
-function recursiveBagFinding(bag) {
-    if(!bag) return 0
-    let contentCount = 0;
-    
-    for(let i=0;i<bag.content.length;i++){  
-        let content = bag.content[i]     
-            let contentBag = findBag(content.mutation, content.color)
+function recursiveBagFinding(quantity, bag) {
 
-        
-            let bagContentCount = recursiveBagFinding(contentBag)
-        
-            console.log(`${content.mutation} ${content.color}: ${contentCount} += ${content.quantity} * ${bagContentCount}`)    
-        
-            contentCount += content.quantity * bagContentCount      
-        
-        
+    if (bag.content.length == 0) return quantity
+
+    let contentCount = 0;
+
+    //for for every bag in this bag, get the countCount
+    for (let i = 0; i < bag.content.length; i++) {
+        let content = bag.content[i]
+
+        //find bag in rule list, 
+        let contentBag = findBag(content.mutation, content.color)
+
+        //add the count of this bag's content to the big counter 
+        contentCount += recursiveBagFinding(content.quantity, contentBag)
     }
-    return contentCount
+    //multiply the result with the amount of bags required
+    return contentCount * quantity
 
 }
 
 
 function findBag(mutation, color) {
-    return bagRules.find(rule => rule.container.mutation === mutation && rule.container.color === color)
+    return bags.find(bag => bag.container.mutation === mutation && bag.container.color === color)
 }
 
 
 function findContent(mutation, color) {
-    return bagRules.filter(rule => {
+    return bags.filter(bag => {
         let canHold = false
-        rule.content.forEach(c => {
+        bag.content.forEach(c => {
             if (c.mutation === mutation && c.color === color)
                 canHold = true
         })
@@ -114,24 +115,20 @@ function convertData(data) {
             let [container, content] = e.replace(/bags|\./g, "").split("contain")
             let [mutation, color] = container.trim().split(" ")
 
-            container = {
-                mutation,
-                color
-            }
+            container = {mutation,color}
 
-            content = content.split(",").map(c => {
-                let [quantity, mutation, color] = c.trim().split(" ")
-                if (quantity === "no") {
-                    quantity = 1
-                    mutation = null
-                    color = null
-                }
-                return {
-                    quantity: parseInt(quantity),
-                    mutation,
-                    color
-                }
-            })
+            content = content.split(",")
+                .map(c => {
+                    let [quantity, mutation, color] = c.trim().split(" ")
+                    if (quantity !== "no") {
+                        return {
+                            quantity: parseInt(quantity),
+                            mutation,
+                            color
+                        }
+                    } else null
+
+                }).filter(c => c !== undefined)
 
             return {
                 container: container,
