@@ -30,3 +30,7 @@ Binary search and finding neighbours
 ## Day 6
 
 Finding answer counts, use of sets to remove duplicates
+
+## Day 7
+
+lots of recursion, trouble with the right calculation
