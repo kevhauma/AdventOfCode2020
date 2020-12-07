@@ -1,5 +1,5 @@
 const fs = require("fs")
-
+console.log("==== DAY 5 ====")
 
 const lookupDirections = {
     B: true,

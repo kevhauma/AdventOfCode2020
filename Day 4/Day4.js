@@ -1,5 +1,5 @@
 const fs = require("fs")
-
+console.log("==== DAY 4 ====")
 
 const validators = {
     byr: byrValidator,
