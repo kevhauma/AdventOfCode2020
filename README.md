@@ -2,6 +2,8 @@
 
 Javascript (ECMAscript6) code for the [Advent of Code 2020](https://adventofcode.com/2020/).
 
+Runnable in NodeJs
+
 No packages needed
 
 ## Day 1
